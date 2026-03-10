@@ -1,6 +1,6 @@
 # Browser Benchmarks
 
-Live website: https://vc-revocation-benchmarks.vercel.app/
+Live website: https://sorted-imt-fadk.vercel.app/
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
