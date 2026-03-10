@@ -3,8 +3,14 @@ import SortedIMT from "../src/sorted-imt"
 const hash = (a: bigint, b: bigint): bigint => a + b
 
 function computeRootFromLeaves(leaves: [bigint, bigint][]): bigint {
-  let level = leaves.map(([value]) => value)
-  let treeLevel = 0
+  const allLeaves: [bigint, bigint][] =
+    leaves.length > 0 ? ([[0n, leaves[0][0]], ...leaves] as [bigint, bigint][]) : []
+
+  let level = allLeaves.map(([value, nextValue]) => hash(value, nextValue))
+
+  if (level.length === 0) {
+    return 0n
+  }
 
   while (level.length > 1) {
     const nextLevel: bigint[] = []
@@ -15,15 +21,12 @@ function computeRootFromLeaves(leaves: [bigint, bigint][]): bigint {
       if (i + 1 < level.length) {
         const right = level[i + 1]
         nextLevel.push(hash(left, right))
-      } else if (treeLevel === 0) {
-        nextLevel.push(leaves[i][0])
       } else {
         nextLevel.push(left)
       }
     }
 
     level = nextLevel
-    treeLevel += 1
   }
 
   return level[0]
@@ -36,8 +39,8 @@ describe("SortedIMT", () => {
     tree.insert(5n)
 
     expect(tree.leaves).toEqual([[5n, 0n]])
-    expect(tree.size).toBe(2)
-    expect(tree.depth).toBe(1)
+    expect(tree.size).toBe(1)
+    expect(tree.depth).toBe(2)
     expect(tree.root).toBe(computeRootFromLeaves(tree.leaves))
   })
 
@@ -69,7 +72,7 @@ describe("SortedIMT", () => {
       [10n, 20n],
       [20n, 0n]
     ])
-    expect(tree.size).toBe(3)
+    expect(tree.size).toBe(2)
   })
 
   test("promotes single child when parent level has odd node count", () => {
@@ -78,8 +81,8 @@ describe("SortedIMT", () => {
     tree.insert(10n)
     tree.insert(20n)
 
-    expect(tree.size).toBe(3)
-    expect(tree.depth).toBe(2)
+    expect(tree.size).toBe(2)
+    expect(tree.depth).toBe(3)
     expect(tree.root).toBe(computeRootFromLeaves(tree.leaves))
   })
 
@@ -93,7 +96,7 @@ describe("SortedIMT", () => {
     tree.insert(50n)
 
     // Leaves include sentinel, so this creates 6 leaves (even), but level-1 has 3 nodes (odd).
-    expect(tree.size).toBe(6)
+    expect(tree.size).toBe(5)
     expect(tree.root).toBe(computeRootFromLeaves(tree.leaves))
   })
 
@@ -111,7 +114,7 @@ describe("SortedIMT", () => {
     expect(result.proof.root).toBe(tree.root)
     expect(result.proof.leaf).toEqual([20n, 30n])
     expect(result.proof.index).toBe(1)
-    expect(result.proof.siblings).toEqual([10n, 30n])
+    expect(result.proof.siblings).toEqual([30n, 40n])
     expect(tree.verifyProof(result)).toBe(true)
   })
 
@@ -129,7 +132,7 @@ describe("SortedIMT", () => {
     expect(result.proof.root).toBe(tree.root)
     expect(result.proof.leaf).toEqual([20n, 30n])
     expect(result.proof.index).toBe(1)
-    expect(result.proof.siblings).toEqual([10n, 30n])
+    expect(result.proof.siblings).toEqual([30n, 40n])
     expect(tree.verifyProof(result)).toBe(true)
   })
 

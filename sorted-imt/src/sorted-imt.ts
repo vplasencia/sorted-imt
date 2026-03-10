@@ -10,7 +10,7 @@ export default class SortedIMT<
   N extends bigint = bigint,
   L extends SortedIMTLeaf<N> = SortedIMTLeaf<N>
 > {
-  // Level 0 contains leaf hashes, upper levels contain internal node hashes.
+  // Level 0 contains hashes of (value, nextValue), upper levels contain internal node hashes.
   private _nodes: N[][]
   // Leaves are kept sorted by entry[0] and linked by entry[1] (successor value).
   private _leaves: L[]
@@ -41,7 +41,7 @@ export default class SortedIMT<
   }
 
   public get size(): number {
-    return this._leaves.length
+    return this._leaves.length - 1
   }
 
   public indexOf(value: N): number {
@@ -186,7 +186,7 @@ export default class SortedIMT<
   }
 
   private recalculateFrom(startLeafIndex: number): void {
-    if (this._leaves.length <= 1) {
+    if (this._leaves.length === 0) {
       this._nodes = [[]]
       return
     }
@@ -195,21 +195,20 @@ export default class SortedIMT<
       this._nodes = [[]]
     }
 
-    const firstDataLeafIndex = 1
-    const startIndex = Math.max(firstDataLeafIndex, startLeafIndex)
-    const level0StartIndex = startIndex - firstDataLeafIndex
+    const startIndex = Math.max(0, startLeafIndex)
+    const level0StartIndex = startIndex
 
     if (!this._nodes[0]) {
       this._nodes[0] = []
     }
 
-    // Recompute level-0 nodes from non-sentinel leaf first values.
+    // Recompute level-0 nodes from all leaf hashes: hash(value, nextValue).
     for (let i = startIndex; i < this._leaves.length; i += 1) {
       const leaf = this._leaves[i]
-      this._nodes[0][i - firstDataLeafIndex] = leaf[0]
+      this._nodes[0][i] = this._hash(leaf[0], leaf[1])
     }
 
-    this._nodes[0].length = this._leaves.length - firstDataLeafIndex
+    this._nodes[0].length = this._leaves.length
 
     let level = 0
     // Parent index range affected at level 1 is floor(startIndex / 2), and so on.
@@ -233,12 +232,8 @@ export default class SortedIMT<
         if (leftIndex + 1 < previousLevel.length) {
           const right = previousLevel[leftIndex + 1]
           nextLevel[i] = this._hash(left, right)
-        } else if (level === 0) {
-          // If a leaf hash has no right sibling, promote the leaf first value.
-          nextLevel[i] = this._leaves[leftIndex + firstDataLeafIndex][0]
         } else {
-          // If any intermediate node has no right sibling (this can happen even with an even leaf count),
-          // promote its only child value unchanged.
+          // LeanIMT-style odd node: if right sibling is missing, promote left child unchanged.
           nextLevel[i] = left
         }
       }
@@ -264,7 +259,7 @@ export default class SortedIMT<
     }
 
     const siblings: N[] = []
-    let nodeIndex = leafIndex - 1
+    let nodeIndex = leafIndex
 
     for (let level = 0; level < this._nodes.length - 1; level += 1) {
       const siblingIndex = nodeIndex ^ 1
@@ -285,8 +280,8 @@ export default class SortedIMT<
   }
 
   private reconstructRootFromProof(proof: SortedIMTMerkleProof<N, L>): N {
-    let node = proof.leaf[0]
-    let nodeIndex = proof.index
+    let node = this._hash(proof.leaf[0], proof.leaf[1])
+    let nodeIndex = proof.index + 1
     let siblingCursor = 0
 
     for (let level = 0; level < this._nodes.length - 1; level += 1) {
