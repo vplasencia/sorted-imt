@@ -1,4 +1,4 @@
-const GITHUB_LINK = "https://github.com/vplasencia/vc-revocation-benchmarks"
+const GITHUB_LINK = "https://github.com/vplasencia/sorted-imt"
 
 export default function ViewSourceCode() {
   return (

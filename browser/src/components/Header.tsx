@@ -7,13 +7,7 @@ export default function Header() {
         href="/"
         className="text-xl md:mb-auto mb-5 font-bold text-blue-500"
       >
-        Revocation Benchmarks
-      </Link>
-      <Link
-        href="/bench"
-        className="font-semibold text-blue-600 hover:text-blue-700"
-      >
-        Run Benchmarks
+        Merkle Tree Benchmarks
       </Link>
     </header>
   )
