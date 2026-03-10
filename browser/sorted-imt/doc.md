@@ -182,9 +182,15 @@ Go to app and click on `Run Functions` in SortedIMT.
 
 1. Clone repo: `git clone https://github.com/vplasencia/sorted-imt.git`
 
-2. Run: `cd browser && yarn && yarn dev`
+2. Navigate to the project directory: `cd sorted-imt`
 
-3. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Go to the web app folder: `cd browser`
+
+4. Install dependencies: `yarn`
+
+5. Start the development server: `yarn dev`
+
+6. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Impact
 If adopted, SortedIMT could become a go to solution for systems that require both membership and non membership proofs, such as nullifier sets, credential revocation registries, allowlists, and identity systems.
