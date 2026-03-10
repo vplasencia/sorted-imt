@@ -16,7 +16,7 @@ export type SortedIMTProofResult<
   N = bigint,
   L extends SortedIMTLeaf<N> = SortedIMTLeaf<N>
 > = {
-  proofType: 0 | 1
+  proofType: 0 | 1 // 0 for membership proof, 1 for non-membership proof
   value: N
   proof: SortedIMTMerkleProof<N, L>
 }

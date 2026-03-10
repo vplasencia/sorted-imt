@@ -104,7 +104,7 @@ describe("SortedIMT", () => {
     tree.insert(20n)
     tree.insert(30n)
 
-    const result = tree.generateMembershipProof(20n)
+    const result = tree.generateProof(20n)
 
     expect(result.proofType).toBe(0)
     expect(result.value).toBe(20n)
@@ -122,7 +122,7 @@ describe("SortedIMT", () => {
     tree.insert(20n)
     tree.insert(30n)
 
-    const result = tree.generateNonMembershipProof(25n)
+    const result = tree.generateProof(25n)
 
     expect(result.proofType).toBe(1)
     expect(result.value).toBe(25n)
@@ -140,7 +140,7 @@ describe("SortedIMT", () => {
     tree.insert(20n)
     tree.insert(30n)
 
-    const result = tree.generateMembershipProof(20n)
+    const result = tree.generateProof(20n)
 
     expect(tree.verifyProof({ ...result, value: 25n })).toBe(false)
   })
@@ -152,7 +152,7 @@ describe("SortedIMT", () => {
     tree.insert(20n)
     tree.insert(30n)
 
-    const result = tree.generateNonMembershipProof(25n)
+    const result = tree.generateProof(25n)
 
     expect(tree.verifyProof({ ...result, value: 20n })).toBe(false)
     expect(tree.verifyProof({ ...result, value: 30n })).toBe(false)

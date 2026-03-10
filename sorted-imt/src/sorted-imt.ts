@@ -102,24 +102,18 @@ export default class SortedIMT<
     this.recalculateFrom(predecessorIndex >= 0 ? predecessorIndex : insertIndex)
   }
 
-  public generateMembershipProof(value: N): SortedIMTProofResult<N, L> {
+  public generateProof(value: N): SortedIMTProofResult<N, L> {
     requireDefined(value, "value")
 
     const leafIndex = this.indexOf(value)
 
-    if (leafIndex <= 0) {
-      throw new Error("The value is not part of the tree leaves")
+    if (leafIndex > 0) {
+      return {
+        proofType: 0,
+        value,
+        proof: this.createProofFromLeafIndex(leafIndex)
+      }
     }
-
-    return {
-      proofType: 0,
-      value,
-      proof: this.createProofFromLeafIndex(leafIndex)
-    }
-  }
-
-  public generateNonMembershipProof(value: N): SortedIMTProofResult<N, L> {
-    requireDefined(value, "value")
 
     if (this._leaves.length <= 1) {
       throw new Error(
