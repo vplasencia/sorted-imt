@@ -199,6 +199,7 @@ Projects will start using this data structure as the most optimized solution for
 
 ## What's Next
 Could this be maintained after the hackathon? Yes
+
 What would a 30-day plan look like?
 1. Work on code optimzation.
 2. Implement new functions like update, insertMany, delete. 
