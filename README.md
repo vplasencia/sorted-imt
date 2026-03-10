@@ -150,7 +150,7 @@ The app allows you to:
 
 ## Implementation
 
-The reference implementation of SortedIMT is available in this repository in [sorted-imt](./sorted-imt).
+The reference implementation of SortedIMT is available in this repository in [sorted-imt](./browser/sorted-imt/).
 
 The implementation includes:
 - SortedIMT data structure
