@@ -3,7 +3,7 @@
 import { useCallback, useState } from "react"
 import { LeanIMT, LeanIMTMerkleProof } from "@zk-kit/lean-imt"
 import { poseidon2 } from "poseidon-lite"
-import { SortedIMT } from "../../../sorted-imt/src"
+import { SortedIMT } from "../../sorted-imt/src"
 // import { poseidon } from "@iden3/js-crypto"
 import {
   Merkletree,
