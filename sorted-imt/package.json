@@ -1,0 +1,22 @@
+{
+  "name": "tree",
+  "scripts": {
+    "test": "jest",
+    "prettier": "prettier -c .",
+    "prettier:write": "prettier -w ."
+  },
+  "author": "",
+  "description": "",
+  "packageManager": "yarn@4.13.0",
+  "dependencies": {
+    "@zk-kit/utils": "^1.4.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.4.0",
+    "jest": "^30.3.0",
+    "prettier": "^3.8.1",
+    "ts-jest": "^29.4.6",
+    "typescript": "^5.9.3"
+  }
+}
