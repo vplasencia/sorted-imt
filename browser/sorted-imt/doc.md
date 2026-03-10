@@ -172,10 +172,19 @@ If this holds, N cannot exist in the tree.
 
 ## Demo
 
-https://sorted-imt-fadk.vercel.app/
+Live App: https://sorted-imt-fadk.vercel.app/
+
+Go to app and click on `Run Functions` in SortedIMT.
+
+<img width="1512" height="845" alt="Screenshot 2026-03-11 at 12 31 32 AM" src="https://github.com/user-attachments/assets/80c7ed2f-9115-44b2-8d7f-1fa2822d76d7" />
 
 ## How to Run
-Go to app and click on `Run Functions` in SortedIMT.
+
+1. Clone repo: `git clone https://github.com/vplasencia/sorted-imt.git`
+
+2. Run: `cd browser && yarn && yarn dev`
+
+3. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Impact
 If adopted, SortedIMT could become a go to solution for systems that require both membership and non membership proofs, such as nullifier sets, credential revocation registries, allowlists, and identity systems.
