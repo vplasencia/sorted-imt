@@ -157,3 +157,17 @@ The implementation includes:
 - Incremental insertion algorithm
 - Membership and Non-Membership proof generation
 - Membership and Non-Membership proof verification
+
+## Proposed Constructions
+
+As part of the experiment to find the most efficient non-membership proof solution using Merkle Trees, these are other solutions being explored. All of them have trade-offs.
+
+The most efficient construction for non-membership proofs combines LeanIMT and Indexed Merkle Tree.
+
+- LeanIMT provides efficiency in insertions and tree construction.
+- Indexed Merkle Tree provides efficiency in non-membership proofs.
+
+Alternatives:
+
+- LeanIMT + Indexed Merkle Tree
+- LeanIMT + Indexed Merkle Tree + efficient sorted leaves structure (to efficiently query the predecessor when inserting a new leaf)
